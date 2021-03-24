@@ -3,7 +3,7 @@ In this project, a interactive dashboard was created to explore  [Belly Button B
 ## Link to site
 https://tomjp90.github.io/plotly-challenge/index
 
-If the repositry is cloned, please activate a python local server in a terminal "python -m http.server" and navigate in a web browser (http://localhost:8000/) to the index.html.
+If the repositry is cloned, please activate a python local server in a terminal "python -m http.server" from folder containings the repositry and navigate in a web browser (http://localhost:8000/).
 
 ## Tehnologies used:
 * JavaScript
