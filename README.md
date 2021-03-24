@@ -11,7 +11,8 @@ If the repositry is cloned, please activate a python local server in a terminal 
 * Plot.ly
 * HTML
 * CSS
-![site-capture.com](Images/site-capture.jpg)
+
+![site-capture.jpg](Images/site-capture.jpg)
 
 ## Step 1: Plotly
 
