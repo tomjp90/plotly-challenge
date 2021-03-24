@@ -1,97 +1,102 @@
 // import the data 
 d3.json("samples.json").then((data) => {
       console.log(data)
-
+      
 //\\\\\\\\\\\\\\\\\\\\\\\\\\DROPDOWN LIST
       // select dropdown menu by index
       var dropDownMenu = d3.select("#selDataset");
-      // get dropdown options
+      // get dropdown options - names
       var names = data.names
       // append names to dropdown options
       names.forEach(element => { 
             dropDownMenu.append("option")
                         .text(element)
-                        .property("value", element) 
-      var ID = names[0]
-      console.log(`id is ${ID}`)
+                        .property("value", element)
+                  });
+      // display html ID value            
+      var ID = names[0];
       document.getElementById("id").innerHTML = ID;
-      });
-
+      
 //===============================INITIALISE INFO/GRAPHS =================================================
       function init() {
             //initial sample
             var initDemo = data.metadata[0];
-            var initialId = data.samples[0]
-            var initData = []
+            var initialId = data.samples[0];
+            var initData = [];
+            var htmlDemo = [];
 
 ///\\\\\\\\\\\\\\\\\\\\\\\\\\\\DEMOGRAPHIC INFO
-            var htmlDemo = [];
             Object.entries(initDemo).forEach(function([key, value]) {
-                  htmlDemo.push("<p><b>" + key.toUpperCase() + "</b>" + ": " + value + "</p>")
+                  htmlDemo.push("<p><b>" + key.toUpperCase() + "</b>" + ": <br>" + value + "</p>")
                   })
             document.getElementById("sample-metadata").innerHTML = htmlDemo.join("");
             
 // \\\\\\\\\\\\\\\\\\\\\\\\\\\BAR GRAPH
             initData.push(initialId)
+            //sort values by sample_values
             var sortedSample = initData.sort((a, b) => b.sample_values - a.sample_values);   
-
             //slice the first 10 objects and reverse order for plotting
-            var initSamples = sortedSample[0].sample_values.slice(0,10).reverse() 
+            var initSamples = sortedSample[0].sample_values.slice(0,10).reverse(); 
             var initOtuId = sortedSample[0].otu_ids.slice(0,10).reverse()
-            var initOtuId = initOtuId.map(function(obj){return 'OTU ' + obj; })      // add a prefix
-            var initOtuLabels = sortedSample[0].otu_labels.slice(0,10).reverse()
+                  initOtuId = initOtuId.map(function(obj){return 'OTU ' + obj + '  ';});// add a prefix for each object in array
+            var initOtuLabels = sortedSample[0].otu_labels.slice(0,10).reverse();
                   
             var trace1 = {
                   x: initSamples,
                   y: initOtuId,
+                  text: initOtuLabels,
                   type: "bar",
                   orientation: "h"
-                  };
-
-            // data
-            var chartData = [trace1];
-
-            // Apply the group bar mode to the layout
-            var layout = {
-            title: `<b>Top 10 OTU Counts</b>`,
-            margin: {
-                  l: 100,
-                  r: 100,
-                  t: 30,
-                  b: 30
-                  },
-            width: 500,
-            height: 600
             };
-            //Render the plot to the div tag with id "plot"
+            // trace1 to array
+            var chartData = [trace1];
+            // apply the group bar mode to the layout
+            var layout = {
+                  title: `<b>Top 10 OTU Samples</b>`,
+                  margin: {
+                        l: 100,
+                        r: 100,
+                        t: 30,
+                        b: 40
+                        },
+                  xaxis: {title: `<b>Sample Values<b>`},
+                  width: 500,
+                  height: 600
+            };
+            //render the plot to the div tag with id "plot"
             Plotly.newPlot("bar", chartData, layout);
 
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\BUBBLE CHART
             var trace2 = {
                   x: initialId.otu_ids,
                   y: initialId.sample_values,
+                  text: initOtuLabels,
                   mode: 'markers',
                   marker: {
                     size: initialId.sample_values,
                     color: initialId.otu_ids
                   }
             };
-                
+            //trace2 to array
             var data2 = [trace2];
-                
+            //apply the group mode to the layout  
             var layout2 = {
-                  title: 'Marker Size',
+                  title: `<b>OTU Sample Values</b>`,
+                  xaxis: {title: `<b>OTU ID<b>`},
+                  yaxis: {title: `<b>Sample Values<b>`},
                   showlegend: false,
                   height: 600,
                   width: 1200
             };
-            Plotly.newPlot('bubble', data2, layout2);
+            //render the plot to the div tag with id "bubble"
+            Plotly.newPlot("bubble", data2, layout2);
 
-//\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\GUAGE
+//\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\GAuGE
+//https://plotly.com/javascript/gauge-charts/
       var data3 = [
-            {//https://plotly.com/javascript/gauge-charts/
-            domain: { x: [0, 1], y: [0, 1] },
-            value: initDemo.wfreq,
+            {
+            domain: { x: [0, 1], y: [0, 1] }, //semi-circle domain
+            value: initDemo.wfreq, //subject ID No.
             title: { 
                   text: `<b>Belly Button Washing Frequency</b><br>Scrubs per Week` },
                   type: "indicator",
@@ -99,6 +104,7 @@ d3.json("samples.json").then((data) => {
                   gauge: {
                         axis: {range: [null, 9]},
                         //https://gka.github.io/palettes/#/9|s|9d9d9d,96ffea,ffffe0|ffffe0,ff005e,93003a|0|1
+                        //create ranges for gauge and choose color
                         steps: [
                               {range: [null, 1], color: "#ffffe0"},
                               {range: [1, 2], color: "#eafee1"},
@@ -110,89 +116,91 @@ d3.json("samples.json").then((data) => {
                               {range: [7, 8], color: "#a0b4ae"},
                               {range: [8, 9], color: "#9d9d9d"}
                               ],
-                  bar: {color: "green"}
-                        }
+                        bar: {color: "green"} //colour of gauge
+                  }
             }
       ];
+      //size gauge on page
       var layout3 = {width: 500, height: 500};
-      Plotly.newPlot('gauge', data3, layout3);
-                  
+      //render the plot to the div tag with id "gauge"
+      Plotly.newPlot("gauge", data3, layout3);           
       }
       
 // ====================LISTEN FOR DROPDOWN CHANGES==================================================
       d3.selectAll("#selDataset").on("change", getData);
       // get data for user input fromn dropdown option
+//----------------------------------------------------------------------------------------     
       function getData() {
             // prevent the page from refreshing
             d3.event.preventDefault();
             // get subject id no from dropdown list
             var inputElement = d3.select("#selDataset");
             var selSubject = inputElement.property("value");
-            // find subject id metadata and samples
-            var subject = [];
-            var sampleId = [];
+            //find data matching user input from dropdown menu and save it
             for (var i = 0; i < data.metadata.length; i++) {
-                  check = data.metadata[i].id
+                  check = data.metadata[i].id;
                   if (check == selSubject) {
-                        subject = data.metadata[i] }
-                  subjectSample = data.samples[i].id
+                        var subject = data.metadata[i] };
+                  subjectSample = data.samples[i].id;
                   if (subjectSample == selSubject) {
-                        sampleId = data.samples[i] }
-            } 
+                        var sampleId = data.samples[i] };
+            };
             // display html ID value
             var ID = sampleId.id
-            console.log(`id is ${ID}`)
             document.getElementById("id").innerHTML = ID;
-
 
             //push dropdown selected sample to charting functions
             descriptionInfo(subject);
             barChart(sampleId);
-            bubbleChart(sampleId)
-            gaugeChart(subject)   
+            bubbleChart(sampleId);
+            gaugeChart(subject); 
       }
 
 //------------------------------------------------------------------------------------------------
+      //update subject description info
       function descriptionInfo(input) {
-            var htmlDemo = []
+            var htmlDemo = [];
+            //for each key and value, create a new array of HTML data to push into site
             Object.entries(input).forEach(function([key, value]) {
-                  htmlDemo.push("<p><b>" + key + "</b>" + ": " + value + "</p>")
-                  })
+                  htmlDemo.push("<p><b>" + key.toUpperCase() + "</b>" + ": <br>" + value + "</p>")
+            })
             document.getElementById("sample-metadata").innerHTML = htmlDemo.join("");   
       }
 //------------------------------------------------------------------------------------------------
+      //update bar chart
       function barChart(input) {
             var arr = [];
             arr.push(input);
-            console.log(arr)
+            //sort input array by sample_values 
             arr.sort((a, b) => b.sample_values - a.sample_values);
-            // var sampleData = sortedSample.slice(0,10);
-            // var reverseSample = sampleData.reverse()
-                    
+            //slice and reverse values to restyle plot      
             var x = arr[0].sample_values.slice(0,10).reverse();
             var y = arr[0].otu_ids.slice(0,10).reverse();
-                  var y = y.map(function(obj){return 'OTU ' + obj;})
+                  var y = y.map(function(obj){return 'OTU ' + obj + '  ';}) //add prefix to each element
             var text = arr.map(object => object.otu_labels.slice(0,10).reverse());
-            console.log(text)
+
             Plotly.restyle("bar", "x", [x]);
             Plotly.restyle("bar", "y", [y]);
-       //     Plotly.restyle("bar", "text", [text]);
+            Plotly.restyle("bar", "text", [text]);
       }
 //------------------------------------------------------------------------------------------------
+      //update bubble chart
       function bubbleChart(input) {
-            x = input.otu_ids
-            y = input.sample_values
-
+            //restyle with new input values
+            x = input.otu_ids;
+            y = input.sample_values;
+            text = input.otu_labels;
             Plotly.restyle("bubble", "x", [x]);
             Plotly.restyle("bubble", "y", [y]);
+            Plotly.restyle("bar", "text", [text]);
       }
 //------------------------------------------------------------------------------------------------
+      //update gauge chart
       function gaugeChart(input){
+            //restyle plot with new input values
             var washFreq = input.wfreq;
             Plotly.restyle("gauge", "value", washFreq);
       }
 
-      
-      init();    
-      
+      init();      
 });
