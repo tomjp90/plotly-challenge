@@ -12,7 +12,7 @@ If the repositry is cloned, please activate a python local server in a terminal 
 * HTML
 * CSS
 
-![site-capture.jpg](Images/site-capture.jpg)
+![site-capture.JPG](Images/site-capture.JPG)
 
 ## Step 1: Plotly
 
