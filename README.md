@@ -11,7 +11,7 @@ If the repositry is cloned, please activate a python local server in a terminal 
 * Plot.ly
 * HTML
 * CSS
-![Bacteria by filterforge.com](Images/bacteria.jpg)
+![site-capture.com](Images/site-capture.jpg)
 
 ## Step 1: Plotly
 
@@ -39,13 +39,9 @@ If the repositry is cloned, please activate a python local server in a terminal 
 
 * Use `otu_labels` for the text values.
 
-![Bubble Chart](Images/bubble_chart.png)
-
 4. Display the sample metadata, i.e., an individual's demographic information.
 
 5. Display each key-value pair from the metadata JSON object somewhere on the page.
-
-![hw](Images/hw03.png)
 
 6. Update all of the plots any time that a new sample is selected.
 
@@ -61,22 +57,7 @@ The following task is advanced and therefore optional.
 
 * Update the chart whenever a new sample is selected.
 
-![Weekly Washing Frequency Gauge](Images/gauge.png)
-
-## Deployment
-
-Deploy your app to a free static page hosting service, such as GitHub Pages. Submit the links to your deployment and your GitHub repo.
-
-## Hints
-
-* Use `console.log` inside of your JavaScript code to see what your data looks like at each step.
-
-* Refer to the [Plotly.js documentation](https://plot.ly/javascript/) when building the plots.
 
 ### About the Data
 
 Hulcr, J. et al.(2012) _A Jungle in There: Bacteria in Belly Buttons are Highly Diverse, but Predictable_. Retrieved from: [http://robdunnlab.com/projects/belly-button-biodiversity/results-and-data/](http://robdunnlab.com/projects/belly-button-biodiversity/results-and-data/)
-
-- - -
-
-© 2019 Trilogy Education Services
