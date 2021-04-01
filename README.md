@@ -1,9 +1,9 @@
 # Plot.ly - Belly Button Biodiversity
-In this project, an interactive dashboard was created to explore  [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catelogs the micrones that colonise human navels. The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare. The dashboard utilises a webage writen in JavaScrpt/HTML and D3 library to read data in to create a dropdown menu to display a chart of each sample using Plotly. A GIT Pages site was used to deploy the dashboard from the repositry. link to the site:
+In this project, an interactive dashboard was created to explore  [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catelogs the micrones that colonise human navels. The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare. The dashboard utilises a webage writen in JavaScrpt/HTML and D3 library to read data in to create a dropdown menu to display a chart of each sample using Plotly. A GIT Pages site was used to deploy the dashboard from the repository. link to the site:
 ## Link to site
 https://tomjp90.github.io/plotly-challenge/index
 
-If the repositry is cloned, please activate a python local server in a terminal "python -m http.server" from the folder the containing the repositry then navigate in a web browser to your local server (http://localhost:8000/).
+If the repositry is cloned, please activate a python local server in a terminal "python -m http.server" from the folder the containing the repository then navigate in a web browser to your local server (http://localhost:8000/).
 
 ## Tehnologies used:
 * JavaScript
